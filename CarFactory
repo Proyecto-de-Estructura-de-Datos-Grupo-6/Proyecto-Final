@@ -1,0 +1,98 @@
+
+package carfactoryf;
+
+
+
+    
+    import java.util.Scanner;
+import java.time.Year;
+
+public class CarFactory {
+    private String make;
+    private String model;
+    private int year;
+    private String type;
+    private String description;
+
+    private CarFactory(String type) {
+        this.make = "Fide";
+        this.year = Year.now().getValue();
+
+        switch (type.toLowerCase()) {
+            case "1":
+            case "sedan":
+                this.type = "Sedan";
+                this.model = "Comfort";
+                this.description = "Fuel Efficiency: High";
+                break;
+            case "2":
+            case "suv":
+                this.type = "SUV";
+                this.model = "Adventure";
+                this.description = "Off-road Capability: Yes";
+                break;
+            case "3":
+            case "sports":
+                this.type = "Sports Car";
+                this.model = "Speedster";
+                this.description = "Top Speed: 200+ mph";
+                break;
+            case "4":
+            case "truck":
+                this.type = "Truck";
+                this.model = "HeavyDuty";
+                this.description = "Towing Capacity: 10000 lbs";
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid car type");
+        }
+    }
+
+    public static CarFactory createCar(String type) {
+        return new CarFactory(type);
+    }
+
+    public String getDescription() {
+        return year + " " + make + " " + model + " - Type: " + type + ", " + description;
+    }
+
+    public String startEngine() {
+        return year + " " + make + " " + model + " engine started!";
+    }
+
+    public static void showMenu() {
+        System.out.println("\n=== Fide Car Factory Menu ===");
+        System.out.println("1. Create Sedan");
+        System.out.println("2. Create SUV");
+        System.out.println("3. Create Sports Car");
+        System.out.println("4. Create Truck");
+        System.out.println("5. Exit");
+        System.out.print("Select an option (1-5): ");
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Fide Car Factory!");
+
+        while (true) {
+            showMenu();
+            String input = scanner.nextLine();
+
+            if (input.equals("5")) {
+                System.out.println("Exiting Car Factory...");
+                break;
+            }
+
+            try {
+                CarFactory car = createCar(input);
+                System.out.println("\nCar Created: " + car.getDescription());
+                System.out.println(car.startEngine());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+
+        scanner.close();
+    }
+    
+}
